@@ -1,0 +1,412 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>Student Activities & Grades | Smart Academic</title>
+
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+
+    /* =====================================
+       SMART ACADEMIC
+       STUDENT ACTIVITIES AND GRADES
+    ===================================== */
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: #F7F2E8;
+      color: #35271e;
+      font-family: Arial, sans-serif;
+    }
+
+    /* TOP NAVIGATION */
+
+    .topbar {
+      background: #6F4E37;
+      color: white;
+      padding: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .brand {
+      font-weight: bold;
+      font-size: 17px;
+    }
+
+    .logout-btn {
+      background: white;
+      color: #6F4E37;
+      padding: 10px 14px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    /* PAGE CONTENT */
+
+    main {
+      max-width: 950px;
+      margin: auto;
+      padding: 20px 15px 50px;
+    }
+
+    .back-link {
+      color: #6F4E37;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    /* WELCOME SECTION */
+
+    .welcome {
+      background: #6F4E37;
+      color: white;
+      padding: 22px;
+      border-radius: 15px;
+      margin: 20px 0;
+    }
+
+    .welcome h1 {
+      margin: 0 0 10px;
+      font-size: 24px;
+    }
+
+    .welcome p {
+      margin: 0;
+    }
+
+    /* CONTENT SECTIONS */
+
+    .section {
+      background: #fffdf9;
+      padding: 20px;
+      border-radius: 15px;
+      border: 1px solid #e8ddce;
+      margin-top: 20px;
+    }
+
+    .section h2 {
+      margin-top: 0;
+      color: #6F4E37;
+    }
+
+    /* ACTIVITY CARDS */
+
+    .activity-card {
+      background: #F7F2E8;
+      padding: 18px;
+      margin-top: 15px;
+      border-radius: 12px;
+      border: 1px solid #e4d5c3;
+    }
+
+    .activity-card h3 {
+      color: #6F4E37;
+      margin-top: 0;
+    }
+
+    .activity-card p {
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+    }
+
+    .muted {
+      color: #806c5d;
+      font-size: 14px;
+    }
+
+    /* ACTIVITY STATUS */
+
+    .status {
+      display: inline-block;
+      padding: 7px 11px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: bold;
+      margin: 8px 0;
+    }
+
+    .pending {
+      background: #f5e3ba;
+      color: #76530f;
+    }
+
+    .submitted {
+      background: #dcece0;
+      color: #276340;
+    }
+
+    .closed {
+      background: #eedada;
+      color: #913a3a;
+    }
+
+    /* ANSWER FORM */
+
+    .answer-form {
+      display: grid;
+      gap: 12px;
+      margin-top: 15px;
+    }
+
+    .answer-form label {
+      display: block;
+      font-weight: bold;
+      color: #6F4E37;
+    }
+
+    .answer-form textarea {
+      display: block;
+      width: 100%;
+      min-height: 130px;
+      padding: 12px;
+      margin-top: 8px;
+      border: 1px solid #d8c8b6;
+      border-radius: 9px;
+      font: inherit;
+      resize: vertical;
+    }
+
+    .answer-form input[type="file"] {
+      display: block;
+      width: 100%;
+      padding: 12px;
+      margin-top: 8px;
+      border: 1px solid #d8c8b6;
+      border-radius: 9px;
+      background: white;
+      font: inherit;
+    }
+
+    /* SUBMIT BUTTON */
+
+    .submit-btn {
+      background: #6F4E37;
+      color: white;
+      border: none;
+      padding: 12px;
+      border-radius: 9px;
+      font: inherit;
+      cursor: pointer;
+    }
+
+    .submit-btn:disabled,
+    .logout-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    /* GRADES AND FEEDBACK */
+
+    .grade-box {
+      background: #fffdf9;
+      padding: 15px;
+      border: 1px solid #d8c8b6;
+      border-radius: 10px;
+      margin-top: 15px;
+      overflow-wrap: anywhere;
+    }
+
+    .grade-box strong {
+      color: #6F4E37;
+    }
+
+    .grade-box p {
+      white-space: pre-wrap;
+    }
+
+    /* SUCCESS AND ERROR MESSAGES */
+
+    .message {
+      font-weight: bold;
+      margin: 12px 0;
+      overflow-wrap: anywhere;
+    }
+
+    .message.success {
+      color: #28734a;
+    }
+
+    .message.error {
+      color: #a83c3c;
+    }
+
+    /* MOBILE SCREEN */
+
+    @media (max-width: 480px) {
+
+      .topbar {
+        padding: 14px;
+      }
+
+      .brand {
+        font-size: 15px;
+      }
+
+      .welcome {
+        padding: 20px;
+      }
+
+      .section {
+        padding: 16px;
+      }
+
+      .activity-card {
+        padding: 15px;
+      }
+
+    }
+
+  </style>
+
+</head>
+
+<body>
+
+  <!-- =====================================
+       TOP NAVIGATION
+  ===================================== -->
+
+  <header class="topbar">
+
+    <div class="brand">
+      ☕ Smart Academic
+    </div>
+
+    <button
+      id="logoutBtn"
+      class="logout-btn"
+      type="button"
+    >
+      Logout
+    </button>
+
+  </header>
+
+  <!-- =====================================
+       MAIN PAGE
+  ===================================== -->
+
+  <main>
+
+    <!-- BACK BUTTON -->
+
+    <p>
+      <a
+        href="student.html"
+        class="back-link"
+      >
+        ← Back to Student Dashboard
+      </a>
+    </p>
+
+    <!-- WELCOME SECTION -->
+
+    <section class="welcome">
+
+      <h1>
+        📝 My Activities & Grades
+      </h1>
+
+      <p>
+        View your assignments,
+        submit answers,
+        and check your grades.
+      </p>
+
+    </section>
+
+    <!-- ERROR AND SUCCESS MESSAGE -->
+
+    <p
+      id="studentMessage"
+      class="message"
+      role="status"
+      aria-live="polite"
+    ></p>
+
+    <!-- AVAILABLE ACTIVITIES -->
+
+    <section class="section">
+
+      <h2>Available Activities</h2>
+
+      <p
+        id="activityCount"
+        class="muted"
+        aria-live="polite"
+      >
+        Starting student activities...
+      </p>
+
+      <div
+        id="studentActivitiesList"
+      ></div>
+
+    </section>
+
+  </main>
+
+  <!-- =====================================
+       SINGLE JAVASCRIPT LOADER
+       ERROR DETECTION ENABLED
+  ===================================== -->
+
+  <script type="module">
+
+    const activityStatus =
+      document.getElementById("activityCount");
+
+    const activityMessage =
+      document.getElementById("studentMessage");
+
+    activityStatus.textContent =
+      "Starting Student Activities...";
+
+    try {
+
+      await import(
+        "./activities-student.js?v=8"
+      );
+
+    } catch (error) {
+
+      console.error(
+        "Student Activities Error:",
+        error
+      );
+
+      activityStatus.textContent =
+        "JavaScript failed to start.";
+
+      activityMessage.textContent =
+        "ERROR: " +
+        (error.message || String(error));
+
+      activityMessage.className =
+        "message error";
+
+    }
+
+  </script>
+
+</body>
+
+  </html>
+  
