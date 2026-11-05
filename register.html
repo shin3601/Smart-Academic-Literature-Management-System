@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>Register | Smart Academic</title>
+
+  <!-- CSS is in the same folder -->
+  <link rel="stylesheet" href="style.css">
+</head>
+
+
+<body>
+
+  <main class="auth-page">
+
+    <section class="auth-card">
+
+      <!-- LOGO -->
+      <div class="logo">
+        ☕
+      </div>
+
+
+      <!-- TITLE -->
+      <h1>Create Account</h1>
+
+      <p class="subtitle">
+        Join your digital study café
+      </p>
+
+
+      <!-- REGISTRATION FORM -->
+      <form id="registerForm">
+
+
+        <!-- FULL NAME -->
+        <div class="input-group">
+
+          <label for="fullName">
+            Full Name
+          </label>
+
+          <input
+            type="text"
+            id="fullName"
+            placeholder="Juan Dela Cruz"
+            autocomplete="name"
+            required
+          >
+
+        </div>
+
+
+        <!-- STUDENT ID -->
+        <div class="input-group">
+
+          <label for="studentId">
+            Student ID
+          </label>
+
+          <input
+            type="text"
+            id="studentId"
+            placeholder="2026-00001"
+            required
+          >
+
+        </div>
+
+
+        <!-- EMAIL -->
+        <div class="input-group">
+
+          <label for="registerEmail">
+            Email Address
+          </label>
+
+          <input
+            type="email"
+            id="registerEmail"
+            placeholder="student@email.com"
+            autocomplete="email"
+            required
+          >
+
+        </div>
+
+
+        <!-- PASSWORD -->
+        <div class="input-group">
+
+          <label for="registerPassword">
+            Password
+          </label>
+
+          <div class="password-box">
+
+            <input
+              type="password"
+              id="registerPassword"
+              placeholder="At least 6 characters"
+              minlength="6"
+              autocomplete="new-password"
+              required
+            >
+
+            <button
+              type="button"
+              id="toggleRegisterPassword"
+              class="password-toggle"
+              aria-label="Show or hide password"
+            >
+              👁
+            </button>
+
+          </div>
+
+        </div>
+
+
+        <!-- CONFIRM PASSWORD -->
+        <div class="input-group">
+
+          <label for="confirmPassword">
+            Confirm Password
+          </label>
+
+          <input
+            type="password"
+            id="confirmPassword"
+            placeholder="Enter password again"
+            minlength="6"
+            autocomplete="new-password"
+            required
+          >
+
+        </div>
+
+
+        <!-- REGISTER BUTTON -->
+        <button
+          type="submit"
+          class="primary-btn"
+          id="registerBtn"
+        >
+          Create Student Account
+        </button>
+
+      </form>
+
+
+      <!-- SUCCESS / ERROR MESSAGE -->
+      <p
+        id="message"
+        class="message"
+        aria-live="polite"
+      ></p>
+
+
+      <!-- LOGIN LINK -->
+      <div class="auth-footer">
+
+        <p>
+          Already have an account?
+
+          <a href="index.html">
+            Login
+          </a>
+        </p>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <!-- JavaScript is also in the same folder -->
+  <script
+    type="module"
+    src="auth.js"
+  ></script>
+
+</body>
+
+  </html>
