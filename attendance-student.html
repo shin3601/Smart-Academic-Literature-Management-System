@@ -1,0 +1,332 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>QR Attendance | Smart Academic</title>
+
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+
+    .attendance-section {
+      margin-top: 20px;
+      padding: 22px;
+      background: #fffdf9;
+      border: 1px solid #e8ddce;
+      border-radius: 16px;
+    }
+
+    .attendance-section h2 {
+      color: #6f4e37;
+      margin-top: 0;
+    }
+
+    .scanner-box {
+      margin-top: 18px;
+      padding: 15px;
+      background: #f7f2e8;
+      border: 1px solid #e4d5c3;
+      border-radius: 12px;
+    }
+
+    #qr-reader {
+      width: 100%;
+      max-width: 450px;
+      margin: 15px auto;
+      overflow: hidden;
+      border-radius: 12px;
+    }
+
+    #qr-reader video {
+      border-radius: 10px;
+    }
+
+    .scanner-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 15px;
+    }
+
+    .scanner-actions button,
+    .manual-form button {
+      padding: 12px 16px;
+      border: none;
+      border-radius: 9px;
+      font: inherit;
+      cursor: pointer;
+    }
+
+    .primary-action {
+      background: #6f4e37;
+      color: white;
+    }
+
+    .secondary-action {
+      background: #e7d8c7;
+      color: #493226;
+    }
+
+    .manual-form {
+      display: grid;
+      gap: 12px;
+      margin-top: 15px;
+    }
+
+    .manual-form label {
+      color: #6f4e37;
+      font-weight: 600;
+    }
+
+    .manual-form input {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #d8c8b6;
+      border-radius: 9px;
+      font: inherit;
+      box-sizing: border-box;
+    }
+
+    .attendance-record {
+      padding: 15px;
+      margin-top: 12px;
+      background: #f7f2e8;
+      border: 1px solid #e4d5c3;
+      border-radius: 10px;
+    }
+
+    .attendance-record h3 {
+      color: #6f4e37;
+      margin-bottom: 7px;
+    }
+
+    .present {
+      color: #28734a;
+      font-weight: bold;
+    }
+
+    .muted {
+      color: #806c5d;
+      font-size: 14px;
+    }
+
+    .message {
+      margin: 12px 0;
+      font-weight: 600;
+      overflow-wrap: anywhere;
+    }
+
+    .message.success {
+      color: #28734a;
+    }
+
+    .message.error {
+      color: #a83c3c;
+    }
+
+    button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    [hidden] {
+      display: none !important;
+    }
+
+  </style>
+
+</head>
+
+<body class="dashboard-page">
+
+  <!-- TOP BAR -->
+
+  <header class="topbar">
+
+    <div class="brand">
+      ☕ Smart Academic
+    </div>
+
+    <button
+      id="logoutBtn"
+      class="logout-btn"
+      type="button"
+    >
+      Logout
+    </button>
+
+  </header>
+
+  <main class="dashboard-content">
+
+    <p>
+
+      <a
+        href="student.html"
+        style="color:#6f4e37;"
+      >
+        ← Back to Student Dashboard
+      </a>
+
+    </p>
+
+    <!-- WELCOME -->
+
+    <section class="welcome-card">
+
+      <h1>📷 QR Attendance</h1>
+
+      <p>
+        Scan your classroom attendance QR code
+        to automatically record your presence.
+      </p>
+
+    </section>
+
+    <p
+      id="attendanceMessage"
+      class="message"
+      role="status"
+      aria-live="polite"
+    ></p>
+
+    <!-- QR SCANNER -->
+
+    <section class="attendance-section">
+
+      <h2>Scan Attendance QR</h2>
+
+      <p class="muted">
+
+        Log in using your student account,
+        then scan the QR code displayed by
+        your Admin.
+
+      </p>
+
+      <div class="scanner-box">
+
+        <div id="qr-reader"></div>
+
+        <div class="scanner-actions">
+
+          <button
+            type="button"
+            id="startScanBtn"
+            class="primary-action"
+          >
+            Start Camera Scanner
+          </button>
+
+          <button
+            type="button"
+            id="stopScanBtn"
+            class="secondary-action"
+            disabled
+          >
+            Stop Camera
+          </button>
+
+        </div>
+
+        <p class="muted">
+
+          Allow camera permission when requested.
+          The rear camera is preferred.
+
+        </p>
+
+      </div>
+
+    </section>
+
+    <!-- MANUAL TOKEN -->
+
+    <section class="attendance-section">
+
+      <h2>Manual QR Entry</h2>
+
+      <p class="muted">
+
+        If your camera is unavailable,
+        you may enter the QR token manually.
+
+      </p>
+
+      <form
+        id="manualForm"
+        class="manual-form"
+      >
+
+        <div>
+
+          <label for="manualToken">
+            Attendance QR Token
+          </label>
+
+          <input
+            type="text"
+            id="manualToken"
+            placeholder="Enter attendance token"
+            autocomplete="off"
+            required
+          >
+
+        </div>
+
+        <button
+          type="submit"
+          id="manualSubmitBtn"
+          class="primary-action"
+        >
+          Submit Attendance
+        </button>
+
+      </form>
+
+    </section>
+
+    <!-- ATTENDANCE HISTORY -->
+
+    <section class="attendance-section">
+
+      <h2>My Attendance History</h2>
+
+      <p
+        id="historyCount"
+        class="muted"
+      >
+        Loading attendance history...
+      </p>
+
+      <div id="historyList"></div>
+
+    </section>
+
+  </main>
+
+  <!-- QR SCANNER LIBRARY -->
+
+  <script
+    src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"
+  ></script>
+
+  <!-- STUDENT JAVASCRIPT -->
+
+  <script
+    type="module"
+    src="attendance-student.js"
+  ></script>
+
+</body>
+  </html>
+  
