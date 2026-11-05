@@ -1,0 +1,201 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+  <title>Login | Smart Academic</title>
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    .role-selection {
+      margin: 20px 0;
+    }
+
+    .role-selection-label {
+      display: block;
+      margin-bottom: 10px;
+      font-weight: 600;
+      color: #493226;
+    }
+
+    .role-options {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .role-option {
+      padding: 13px 8px;
+      border: 2px solid #e5d8c8;
+      border-radius: 12px;
+      background: #f7f2e8;
+      color: #6f4e37;
+      font: inherit;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.2s ease;
+    }
+
+    .role-option.active {
+      background: #6f4e37;
+      border-color: #6f4e37;
+      color: white;
+    }
+
+    .role-option:focus-visible {
+      outline: 3px solid #b38b6d;
+      outline-offset: 2px;
+    }
+
+    .role-hint {
+      margin-top: 9px;
+      font-size: 13px;
+      color: #806c5d;
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+
+  <main class="auth-page">
+    <section class="auth-card">
+
+      <div class="logo"></div>
+
+      <h1>
+        Smart Academic Lecture Management System
+      </h1>
+
+      <p class="subtitle">
+        Your Digital Study Companion
+      </p>
+
+      <form id="loginForm">
+
+        <!-- SELECT ACCOUNT TYPE -->
+        <div class="role-selection">
+
+          <span class="role-selection-label">
+            Login as
+          </span>
+
+          <div class="role-options">
+
+            <button
+              type="button"
+              id="studentRoleBtn"
+              class="role-option active"
+              aria-pressed="true"
+            >
+               Student
+            </button>
+
+            <button
+              type="button"
+              id="adminRoleBtn"
+              class="role-option"
+              aria-pressed="false"
+            >
+               Admin
+            </button>
+
+          </div>
+
+          <input
+            type="hidden"
+            id="selectedRole"
+            value="student"
+          >
+
+          <p class="role-hint" id="roleHint">
+            Access your student dashboard.
+          </p>
+
+        </div>
+
+        <!-- EMAIL -->
+        <div class="input-group">
+
+          <label for="email">
+            Email
+          </label>
+
+          <input
+            type="email"
+            id="email"
+            placeholder="Enter your email"
+            autocomplete="email"
+            required
+          >
+
+        </div>
+
+        <!-- PASSWORD -->
+        <div class="input-group">
+
+          <label for="password">
+            Password
+          </label>
+
+          <div class="password-box">
+
+            <input
+              type="password"
+              id="password"
+              placeholder="Enter your password"
+              autocomplete="current-password"
+              required
+            >
+
+            <button
+              type="button"
+              id="togglePassword"
+              class="password-toggle"
+              aria-label="Show or hide password"
+            >
+              👁
+            </button>
+
+          </div>
+
+        </div>
+
+        <!-- LOGIN -->
+        <button
+          type="submit"
+          class="primary-btn"
+          id="loginBtn"
+        >
+          Login as Student
+        </button>
+
+      </form>
+
+      <p
+        id="message"
+        class="message"
+        role="status"
+        aria-live="polite"
+      ></p>
+
+      <div class="auth-footer">
+        <p>
+          Don't have an account?
+          <a href="register.html">
+            Register as Student
+          </a>
+        </p>
+      </div>
+
+    </section>
+  </main>
+
+  <script type="module" src="auth.js"></script>
+
+</body>
+            </html>
+            
