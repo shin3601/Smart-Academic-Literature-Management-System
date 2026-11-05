@@ -1,0 +1,236 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>Admin Dashboard | Smart Academic</title>
+
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+
+    .dashboard-card {
+      display: block;
+      color: inherit;
+      text-decoration: none;
+    }
+
+    a.dashboard-card {
+      transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+    }
+
+    a.dashboard-card:hover {
+      transform: translateY(-3px);
+      box-shadow:
+        0 6px 18px rgba(0,0,0,0.08);
+    }
+
+    a.dashboard-card:focus-visible {
+      outline: 3px solid #6F4E37;
+      outline-offset: 3px;
+    }
+
+    .coming-soon {
+      opacity: 0.75;
+    }
+
+    .coming-soon-label {
+      display: inline-block;
+      margin-top: 8px;
+      padding: 5px 10px;
+      background: #E8DCCC;
+      color: #6F4E37;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: bold;
+    }
+
+  </style>
+
+</head>
+
+<body class="dashboard-page">
+
+  <!-- TOP NAVIGATION -->
+
+  <header class="topbar">
+
+    <div class="brand">
+      ☕ Smart Academic
+    </div>
+
+    <button
+      id="logoutBtn"
+      class="logout-btn"
+      type="button"
+    >
+      Logout
+    </button>
+
+  </header>
+
+  <!-- ADMIN DASHBOARD -->
+
+  <main class="dashboard-content">
+
+    <!-- WELCOME -->
+
+    <section class="welcome-card">
+
+      <h1 id="welcomeText">
+        Welcome, Admin!
+      </h1>
+
+      <p>
+        Manage your academic system
+        in one place.
+      </p>
+
+    </section>
+
+    <h2 style="margin-bottom:20px;">
+      Admin Dashboard
+    </h2>
+
+    <!-- DASHBOARD FEATURES -->
+
+    <section class="dashboard-grid">
+
+      <!-- MANAGE STUDENTS -->
+
+      <a
+        href="students.html"
+        class="dashboard-card"
+      >
+
+        <div class="icon">👥</div>
+
+        <h3>Manage Students</h3>
+
+        <p>
+          View registered students
+          and manage student records.
+        </p>
+
+      </a>
+
+      <!-- LECTURE MANAGEMENT -->
+
+      <a
+        href="lectures-admin.html"
+        class="dashboard-card"
+      >
+
+        <div class="icon">📚</div>
+
+        <h3>Lecture Management</h3>
+
+        <p>
+          Create, edit, delete,
+          and organize academic lectures.
+        </p>
+
+      </a>
+
+      <!-- ACTIVITIES AND GRADES -->
+
+      <a
+        href="activities-admin.html"
+        class="dashboard-card"
+      >
+
+        <div class="icon">📝</div>
+
+        <h3>Activities & Grades</h3>
+
+        <p>
+          Create assignments,
+          review submissions,
+          and assign grades.
+        </p>
+
+      </a>
+
+      <!-- QR ATTENDANCE -->
+
+      <a
+        href="attendance-admin.html"
+        class="dashboard-card"
+      >
+
+        <div class="icon">📷</div>
+
+        <h3>QR Attendance</h3>
+
+        <p>
+          Generate QR codes,
+          monitor student attendance,
+          and review attendance records.
+        </p>
+
+      </a>
+
+      <!-- SCHEDULE MANAGEMENT -->
+
+      <a
+        href="calendar.html"
+        class="dashboard-card"
+      >
+
+        <div class="icon">📅</div>
+
+        <h3>Schedule Management</h3>
+
+        <p>
+          Manage class schedules,
+          examinations, holidays,
+          and no-class days.
+        </p>
+
+      </a>
+
+
+
+      <!-- ANALYTICS AND REPORTS -->
+
+      <a
+        href="analytics-admin.html"
+        class="dashboard-card"
+      >
+
+        <div class="icon">📊</div>
+
+        <h3>Analytics & Reports</h3>
+
+        <p>
+          Monitor attendance,
+          student activity scores,
+          grades, and academic progress.
+        </p>
+
+      </a>
+
+    </section>
+
+  </main>
+
+  <!-- AUTHENTICATION AND ROLE PROTECTION -->
+
+  <script
+    type="module"
+    src="guard.js"
+  ></script>
+
+</body>
+
+</html>
