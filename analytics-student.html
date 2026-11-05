@@ -1,0 +1,400 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>My Analytics | Smart Academic</title>
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    .analytics-section {
+      background: #fffdf8;
+      padding: 20px;
+      border: 1px solid #e8ddce;
+      border-radius: 16px;
+      margin-top: 20px;
+    }
+
+    .analytics-section h2 {
+      color: #6f4e37;
+      margin-bottom: 12px;
+      font-size: 22px;
+    }
+
+    .analytics-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .stat-card {
+      background: #f7f2e8;
+      border: 1px solid #e4d5c3;
+      border-radius: 14px;
+      padding: 18px;
+      min-width: 0;
+    }
+
+    .stat-card h3 {
+      color: #806c5d;
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+
+    .stat-number {
+      color: #6f4e37;
+      font-size: 31px;
+      font-weight: bold;
+      overflow-wrap: anywhere;
+    }
+
+    .muted {
+      color: #806c5d;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .report-toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .report-button {
+      padding: 11px 15px;
+      background: #6f4e37;
+      color: white;
+      border: none;
+      border-radius: 9px;
+      font: inherit;
+      cursor: pointer;
+    }
+
+    .report-button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .report-item {
+      background: #f7f2e8;
+      padding: 15px;
+      border: 1px solid #e4d5c3;
+      border-radius: 12px;
+      margin-top: 12px;
+      overflow-wrap: anywhere;
+    }
+
+    .report-item h3 {
+      color: #6f4e37;
+      margin-bottom: 8px;
+      font-size: 17px;
+    }
+
+    .report-item p {
+      margin-top: 7px;
+    }
+
+    .report-status {
+      display: inline-block;
+      margin-top: 9px;
+      padding: 6px 11px;
+      border-radius: 20px;
+      font-weight: bold;
+      font-size: 12px;
+    }
+
+    .report-status.present,
+    .report-status.graded {
+      background: #dcece0;
+      color: #276340;
+    }
+
+    .report-status.pending {
+      background: #f5e3ba;
+      color: #76530f;
+    }
+
+    .report-status.missing {
+      background: #eedada;
+      color: #913a3a;
+    }
+
+    .score-track {
+      height: 9px;
+      width: 100%;
+      background: #e7d8c7;
+      border-radius: 20px;
+      overflow: hidden;
+      margin-top: 12px;
+    }
+
+    .score-fill {
+      height: 100%;
+      background: #6f4e37;
+      border-radius: 20px;
+      transition: width 0.2s;
+    }
+
+    .calendar-toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 15px;
+    }
+
+    .calendar-toolbar button {
+      background: #e7d8c7;
+      border: none;
+      border-radius: 9px;
+      padding: 9px 13px;
+      color: #493226;
+      cursor: pointer;
+    }
+
+    #calendarMonthLabel {
+      text-align: center;
+      font-weight: bold;
+      color: #6f4e37;
+    }
+
+    .calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(7, minmax(0, 1fr));
+      gap: 5px;
+    }
+
+    .calendar-day {
+      min-width: 0;
+      min-height: 41px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #f7f2e8;
+      border-radius: 8px;
+      font-size: 13px;
+      color: #493226;
+    }
+
+    .calendar-day.header {
+      background: transparent;
+      font-weight: bold;
+      color: #806c5d;
+      min-height: 29px;
+    }
+
+    .calendar-day.empty {
+      background: transparent;
+    }
+
+    .calendar-day.present-day {
+      background: #dcece0;
+      color: #276340;
+      border: 1px solid #a6cbb1;
+      font-weight: bold;
+    }
+
+    .calendar-legend {
+      margin-top: 12px;
+    }
+
+    .message {
+      overflow-wrap: anywhere;
+    }
+
+    [hidden] {
+      display: none !important;
+    }
+
+    @media (max-width: 480px) {
+      .analytics-section {
+        padding: 16px;
+      }
+
+      .stat-card {
+        padding: 13px;
+      }
+
+      .stat-number {
+        font-size: 26px;
+      }
+
+      .calendar-day {
+        min-height: 35px;
+        font-size: 12px;
+      }
+    }
+  </style>
+</head>
+
+<body class="dashboard-page">
+
+  <header class="topbar">
+    <div class="brand">☕ Smart Academic</div>
+
+    <button
+      type="button"
+      id="logoutBtn"
+      class="logout-btn"
+    >
+      Logout
+    </button>
+  </header>
+
+  <main class="dashboard-content">
+
+    <p>
+      <a
+        href="student.html"
+        style="color:#6f4e37;"
+      >
+        ← Back to Student Dashboard
+      </a>
+    </p>
+
+    <section class="welcome-card" style="margin-top:18px;">
+      <h1>📊 My Analytics & Reports</h1>
+      <p>
+        View your attendance, activity grades,
+        and academic progress.
+      </p>
+    </section>
+
+    <div class="report-toolbar">
+      <p class="muted">
+        Data is retrieved from Smart Academic.
+      </p>
+
+      <button
+        id="refreshReportsBtn"
+        type="button"
+        class="report-button"
+      >
+        Refresh Reports
+      </button>
+    </div>
+
+    <p
+      id="reportMessage"
+      class="message"
+      role="status"
+      aria-live="polite"
+    ></p>
+
+    <!-- OVERVIEW -->
+
+    <section class="analytics-section">
+
+      <h2>My Academic Overview</h2>
+
+      <div class="analytics-grid">
+
+        <article class="stat-card">
+          <h3>Present Sessions</h3>
+          <div class="stat-number" id="presentCount">—</div>
+          <p class="muted">Recorded QR attendance</p>
+        </article>
+
+        <article class="stat-card">
+          <h3>Submitted Activities</h3>
+          <div class="stat-number" id="submittedCount">—</div>
+          <p class="muted">Activities submitted</p>
+        </article>
+
+        <article class="stat-card">
+          <h3>Graded Activities</h3>
+          <div class="stat-number" id="gradedCount">—</div>
+          <p class="muted">Activities with scores</p>
+        </article>
+
+        <article class="stat-card">
+          <h3>Overall Activity Score</h3>
+          <div class="stat-number" id="averageScore">—</div>
+          <p class="muted">Earned points / total graded points</p>
+        </article>
+
+      </div>
+
+      <p class="muted" style="margin-top:13px;">
+        Activities waiting for grading:
+        <strong id="pendingCount">—</strong>
+      </p>
+
+    </section>
+
+    <!-- ATTENDANCE CALENDAR -->
+
+    <section class="analytics-section">
+
+      <h2>My Attendance Calendar</h2>
+
+      <div class="calendar-toolbar">
+
+        <button type="button" id="prevMonthBtn">
+          ◀
+        </button>
+
+        <span id="calendarMonthLabel">Month</span>
+
+        <button type="button" id="nextMonthBtn">
+          ▶
+        </button>
+
+      </div>
+
+      <div id="calendarGrid" class="calendar-grid"></div>
+
+      <p class="muted calendar-legend">
+        Green dates mean at least one PRESENT attendance
+        was recorded. Other dates are not automatically
+        considered ABSENT.
+      </p>
+
+    </section>
+
+    <!-- ATTENDANCE HISTORY -->
+
+    <section class="analytics-section">
+
+      <h2>My Attendance History</h2>
+
+      <p id="attendanceCount" class="muted">
+        Loading attendance...
+      </p>
+
+      <div id="attendanceList"></div>
+
+    </section>
+
+    <!-- ACTIVITY GRADES -->
+
+    <section class="analytics-section">
+
+      <h2>My Activity Grades</h2>
+
+      <p id="gradesCount" class="muted">
+        Loading grades...
+      </p>
+
+      <div id="gradesList"></div>
+
+    </section>
+
+  </main>
+
+  <script
+    type="module"
+    src="analytics-student.js?v=1"
+  ></script>
+
+</body>
+  </html>
+  
