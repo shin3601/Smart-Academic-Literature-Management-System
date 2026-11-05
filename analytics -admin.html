@@ -1,0 +1,363 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>Admin Analytics | Smart Academic</title>
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    .analytics-section {
+      margin-top: 20px;
+      padding: 20px;
+      background: #fffdf9;
+      border: 1px solid #e8ddce;
+      border-radius: 16px;
+    }
+
+    .analytics-section h2 {
+      color: #6f4e37;
+      margin-bottom: 14px;
+    }
+
+    .analytics-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .analytics-card {
+      padding: 17px;
+      border-radius: 12px;
+      border: 1px solid #e4d5c3;
+      background: #f7f2e8;
+      min-width: 0;
+    }
+
+    .analytics-card h3 {
+      color: #806c5d;
+      font-size: 13px;
+      margin-bottom: 8px;
+    }
+
+    .analytics-number {
+      color: #6f4e37;
+      font-size: 29px;
+      font-weight: bold;
+      overflow-wrap: anywhere;
+    }
+
+    .analytics-muted {
+      color: #806c5d;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .analytics-toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .analytics-button {
+      padding: 11px 16px;
+      border: none;
+      border-radius: 9px;
+      background: #6f4e37;
+      color: white;
+      font: inherit;
+      cursor: pointer;
+    }
+
+    .analytics-button:disabled {
+      opacity: .6;
+      cursor: not-allowed;
+    }
+
+    .analytics-select {
+      width: 100%;
+      padding: 13px;
+      border: 1px solid #d8c8b6;
+      border-radius: 10px;
+      font: inherit;
+      background: white;
+      color: #3b2921;
+      margin: 12px 0;
+    }
+
+    .analytics-item {
+      padding: 15px;
+      margin-top: 12px;
+      border: 1px solid #e4d5c3;
+      border-radius: 12px;
+      background: #f7f2e8;
+      overflow-wrap: anywhere;
+    }
+
+    .analytics-item h3 {
+      color: #6f4e37;
+      margin-bottom: 8px;
+      font-size: 17px;
+    }
+
+    .analytics-item p {
+      margin-top: 7px;
+    }
+
+    .analytics-badge {
+      display: inline-block;
+      padding: 6px 11px;
+      margin-top: 9px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: bold;
+    }
+
+    .analytics-badge.present,
+    .analytics-badge.graded {
+      background: #dcece0;
+      color: #276340;
+    }
+
+    .analytics-badge.pending {
+      background: #f5e3ba;
+      color: #76530f;
+    }
+
+    .analytics-badge.missing {
+      background: #eedada;
+      color: #913a3a;
+    }
+
+    .analytics-bar {
+      margin-top: 11px;
+      height: 9px;
+      border-radius: 20px;
+      background: #e7d8c7;
+      overflow: hidden;
+    }
+
+    .analytics-fill {
+      height: 100%;
+      background: #6f4e37;
+      border-radius: 20px;
+    }
+
+    .analytics-message {
+      margin: 15px 0;
+      font-weight: bold;
+      overflow-wrap: anywhere;
+    }
+
+    .analytics-message.error {
+      color: #a83c3c;
+    }
+
+    .analytics-message.success {
+      color: #28734a;
+    }
+
+    [hidden] {
+      display: none !important;
+    }
+
+    @media(max-width:480px) {
+      .analytics-section {
+        padding: 16px;
+      }
+
+      .analytics-card {
+        padding: 13px;
+      }
+
+      .analytics-number {
+        font-size: 25px;
+      }
+    }
+  </style>
+</head>
+
+<body class="dashboard-page">
+
+  <header class="topbar">
+    <div class="brand">☕ Smart Academic</div>
+    <button
+      id="logoutBtn"
+      type="button"
+      class="logout-btn"
+    >
+      Logout
+    </button>
+  </header>
+
+  <main class="dashboard-content">
+
+    <p>
+      <a
+        href="admin.html"
+        style="color:#6f4e37;"
+      >
+        ← Back to Admin Dashboard
+      </a>
+    </p>
+
+    <section
+      class="welcome-card"
+      style="margin-top:18px;"
+    >
+      <h1>📊 Analytics & Reports</h1>
+      <p>
+        Monitor student attendance,
+        submissions, grades, and
+        academic performance.
+      </p>
+    </section>
+
+    <div class="analytics-toolbar">
+      <p class="analytics-muted">
+        Data from your Smart Academic database
+      </p>
+
+      <button
+        id="refreshBtn"
+        type="button"
+        class="analytics-button"
+      >
+        Refresh Reports
+      </button>
+    </div>
+
+    <p
+      id="reportMessage"
+      class="analytics-message"
+      role="status"
+      aria-live="polite"
+    ></p>
+
+    <!-- SCHOOL OVERVIEW -->
+
+    <section class="analytics-section">
+      <h2>Academic Overview</h2>
+
+      <div class="analytics-grid">
+
+        <article class="analytics-card">
+          <h3>Registered Students</h3>
+          <div
+            id="studentTotal"
+            class="analytics-number"
+          >—</div>
+        </article>
+
+        <article class="analytics-card">
+          <h3>Attendance Sessions</h3>
+          <div
+            id="sessionTotal"
+            class="analytics-number"
+          >—</div>
+        </article>
+
+        <article class="analytics-card">
+          <h3>Recorded QR Check-ins</h3>
+          <div
+            id="attendanceTotal"
+            class="analytics-number"
+          >—</div>
+        </article>
+
+        <article class="analytics-card">
+          <h3>Graded Submissions</h3>
+          <div
+            id="gradedTotal"
+            class="analytics-number"
+          >—</div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- SELECT STUDENT -->
+
+    <section class="analytics-section">
+
+      <h2>Student Performance Report</h2>
+
+      <label for="studentSelect">
+        Select Registered Student
+      </label>
+
+      <select
+        id="studentSelect"
+        class="analytics-select"
+        disabled
+      >
+        <option value="">
+          Loading students...
+        </option>
+      </select>
+
+      <p id="selectedStudentInfo"
+         class="analytics-muted">
+        Select a student to view their report.
+      </p>
+
+      <div
+        id="studentSummary"
+        class="analytics-grid"
+        style="margin-top:15px;"
+      ></div>
+
+    </section>
+
+    <!-- STUDENT ATTENDANCE -->
+
+    <section class="analytics-section">
+      <h2>Student Attendance</h2>
+
+      <p class="analytics-muted">
+        Shows confirmed QR attendance records.
+        No record does not automatically mean
+        an official absence.
+      </p>
+
+      <div id="studentAttendanceList"></div>
+    </section>
+
+    <!-- STUDENT GRADES -->
+
+    <section class="analytics-section">
+      <h2>Student Activity Grades</h2>
+
+      <div id="studentGradesList"></div>
+    </section>
+
+    <!-- SESSION REPORTS -->
+
+    <section class="analytics-section">
+      <h2>Attendance Session Reports</h2>
+
+      <p class="analytics-muted">
+        Number of recorded QR check-ins
+        for each attendance session.
+      </p>
+
+      <div id="sessionReportsList"></div>
+    </section>
+
+  </main>
+
+  <script
+    type="module"
+    src="analytics-admin.js?v=1"
+  ></script>
+
+</body>
+            </html>
+            
