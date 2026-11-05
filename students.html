@@ -1,0 +1,67 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+  <title>Manage Students | Smart Academic</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="dashboard-page">
+
+  <header class="topbar">
+    <div class="brand">☕ Smart Academic</div>
+    <button id="logoutBtn" class="logout-btn">
+      Logout
+    </button>
+  </header>
+
+  <main class="dashboard-content">
+
+    <p>
+      <a href="admin.html" style="color:#6F4E37;">
+        ← Back to Admin Dashboard
+      </a>
+    </p>
+
+    <section class="welcome-card">
+      <h1>👥 Manage Students</h1>
+      <p>View all registered student accounts.</p>
+    </section>
+
+    <section class="dashboard-card"
+             style="margin-top:20px;">
+
+      <h2>Registered Students</h2>
+
+      <p id="studentCount">Loading students...</p>
+
+      <input
+        type="search"
+        id="studentSearch"
+        placeholder="🔍 Search name or Student ID"
+        style="
+          width:100%;
+          padding:12px;
+          margin:15px 0;
+          border:1px solid #d8c8b6;
+          border-radius:10px;
+          box-sizing:border-box;
+        "
+      >
+
+      <div id="studentsList" aria-live="polite">
+        Loading...
+      </div>
+
+    </section>
+
+  </main>
+
+  <script type="module" src="students.js"></script>
+
+</body>
+</html>
