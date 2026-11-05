@@ -1,0 +1,277 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+  <title>Lecture Management | Smart Academic</title>
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    .lecture-section {
+      margin-top: 20px;
+    }
+
+    .lecture-form {
+      display: grid;
+      gap: 14px;
+      margin-top: 18px;
+    }
+
+    .lecture-form label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 600;
+      color: #6f4e37;
+    }
+
+    .lecture-form input,
+    .lecture-form textarea {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #d8c8b6;
+      border-radius: 10px;
+      font: inherit;
+      box-sizing: border-box;
+    }
+
+    .lecture-form textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    .attachment-box {
+      padding: 14px;
+      background: #f7f2e8;
+      border: 1px dashed #bba58e;
+      border-radius: 12px;
+    }
+
+    .file-hint {
+      font-size: 13px;
+      color: #806c5d;
+    }
+
+    .lecture-item {
+      padding: 16px;
+      margin-top: 14px;
+      background: #f7f2e8;
+      border: 1px solid #e6d8c6;
+      border-radius: 12px;
+    }
+
+    .lecture-item h3 {
+      margin: 0 0 8px;
+      color: #6f4e37;
+    }
+
+    .lecture-content {
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+    }
+
+    .lecture-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 14px;
+    }
+
+    .lecture-actions button,
+    .cancel-btn,
+    .attachment-link {
+      padding: 10px 16px;
+      border: 0;
+      border-radius: 9px;
+      font: inherit;
+      cursor: pointer;
+    }
+
+    .edit-btn {
+      background: #6f4e37;
+      color: white;
+    }
+
+    .delete-btn {
+      background: #a83c3c;
+      color: white;
+    }
+
+    .cancel-btn {
+      background: #e5d8c8;
+      color: #493226;
+    }
+
+    .attachment-link {
+      display: inline-block;
+      background: #e5d8c8;
+      color: #493226;
+      text-decoration: none;
+      margin-top: 10px;
+    }
+
+    .lecture-message {
+      margin: 12px 0;
+      font-weight: 600;
+      overflow-wrap: anywhere;
+    }
+
+    .lecture-message.error {
+      color: #a83c3c;
+    }
+
+    .lecture-message.success {
+      color: #28734a;
+    }
+  </style>
+</head>
+
+<body class="dashboard-page">
+
+  <header class="topbar">
+    <div class="brand">☕ Smart Academic</div>
+
+    <button
+      id="logoutBtn"
+      class="logout-btn"
+      type="button"
+    >
+      Logout
+    </button>
+  </header>
+
+  <main class="dashboard-content">
+
+    <p>
+      <a href="admin.html"
+         style="color:#6f4e37;">
+        ← Back to Admin Dashboard
+      </a>
+    </p>
+
+    <section class="welcome-card">
+      <h1>📚 Lecture Management</h1>
+      <p>
+        Create lectures and upload learning materials.
+      </p>
+    </section>
+
+    <section class="dashboard-card lecture-section">
+
+      <h2 id="formTitle">Create New Lecture</h2>
+
+      <form id="lectureForm" class="lecture-form">
+
+        <div>
+          <label for="lectureTitle">
+            Lecture Title
+          </label>
+
+          <input
+            type="text"
+            id="lectureTitle"
+            placeholder="Introduction to Programming"
+            maxlength="200"
+            required
+          >
+        </div>
+
+        <div>
+          <label for="lectureDescription">
+            Description
+          </label>
+
+          <textarea
+            id="lectureDescription"
+            placeholder="Brief lecture description"
+          ></textarea>
+        </div>
+
+        <div>
+          <label for="lectureContent">
+            Lecture Content
+          </label>
+
+          <textarea
+            id="lectureContent"
+            placeholder="Write your lecture here..."
+            rows="7"
+          ></textarea>
+        </div>
+
+        <div class="attachment-box">
+
+          <label for="lectureFile">
+            📎 Attach Lecture File
+          </label>
+
+          <input
+            type="file"
+            id="lectureFile"
+            accept=".pdf,.doc,.docx,.ppt,.pptx,.png,.jpg,.jpeg,.webp"
+          >
+
+          <p class="file-hint">
+            PDF, Word, PowerPoint, or images.
+            Maximum 50 MB.
+          </p>
+
+          <p
+            id="currentAttachment"
+            class="file-hint"
+          ></p>
+
+        </div>
+
+        <button
+          type="submit"
+          class="primary-btn"
+          id="saveLectureBtn"
+        >
+          Save Lecture
+        </button>
+
+        <button
+          type="button"
+          class="cancel-btn"
+          id="cancelEditBtn"
+          hidden
+        >
+          Cancel Editing
+        </button>
+
+      </form>
+
+      <p
+        id="lectureMessage"
+        class="lecture-message"
+        role="status"
+        aria-live="polite"
+      ></p>
+
+    </section>
+
+    <section class="dashboard-card lecture-section">
+
+      <h2>Existing Lectures</h2>
+
+      <p id="lectureCount">
+        Loading lectures...
+      </p>
+
+      <div id="lecturesList"></div>
+
+    </section>
+
+  </main>
+
+  <script
+    type="module"
+    src="lectures-admin.js"
+  ></script>
+
+</body>
+  </html>
+  
