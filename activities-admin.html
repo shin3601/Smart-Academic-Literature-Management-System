@@ -1,0 +1,324 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>Activities & Grades | Smart Academic</title>
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    .activity-section {
+      margin-top: 20px;
+      padding: 22px;
+      background: #fffdf9;
+      border: 1px solid #e8ddce;
+      border-radius: 16px;
+    }
+
+    .activity-section h2 {
+      color: #6f4e37;
+      margin-top: 0;
+    }
+
+    .activity-form {
+      display: grid;
+      gap: 15px;
+    }
+
+    .activity-form label,
+    .grade-form label {
+      display: block;
+      margin-bottom: 6px;
+      color: #6f4e37;
+      font-weight: 600;
+    }
+
+    .activity-form input,
+    .activity-form textarea,
+    .grade-form input,
+    .grade-form textarea {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #d8c8b6;
+      border-radius: 9px;
+      font: inherit;
+      box-sizing: border-box;
+    }
+
+    .activity-form textarea,
+    .grade-form textarea {
+      min-height: 90px;
+      resize: vertical;
+    }
+
+    .activity-card {
+      padding: 18px;
+      margin-top: 15px;
+      background: #f7f2e8;
+      border: 1px solid #e4d5c3;
+      border-radius: 12px;
+    }
+
+    .activity-card h3 {
+      margin-top: 0;
+      color: #6f4e37;
+    }
+
+    .activity-card p,
+    .submission-card p {
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+    }
+
+    .activity-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+      margin-top: 14px;
+    }
+
+    .activity-actions button,
+    .grade-form button,
+    .primary-action,
+    .secondary-action {
+      padding: 11px 15px;
+      border: none;
+      border-radius: 9px;
+      cursor: pointer;
+      font: inherit;
+    }
+
+    .primary-action {
+      background: #6f4e37;
+      color: white;
+    }
+
+    .secondary-action {
+      background: #e7d8c7;
+      color: #493226;
+    }
+
+    .danger-action {
+      background: #a83c3c;
+      color: white;
+    }
+
+    .submission-card {
+      padding: 16px;
+      margin-top: 12px;
+      border: 1px solid #e4d5c3;
+      border-radius: 12px;
+      background: #fff;
+    }
+
+    .submission-card h3 {
+      margin-top: 0;
+      color: #6f4e37;
+    }
+
+    .grade-form {
+      display: grid;
+      gap: 12px;
+      margin-top: 15px;
+    }
+
+    .message {
+      margin: 12px 0;
+      font-weight: 600;
+      overflow-wrap: anywhere;
+    }
+
+    .message.error {
+      color: #a83c3c;
+    }
+
+    .message.success {
+      color: #28734a;
+    }
+
+    .muted {
+      color: #806c5d;
+      font-size: 14px;
+    }
+
+    button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    [hidden] {
+      display: none !important;
+    }
+  </style>
+</head>
+
+<body class="dashboard-page">
+
+  <header class="topbar">
+    <div class="brand"> Smart Academic literature management system </div>
+
+    <button
+      id="logoutBtn"
+      class="logout-btn"
+      type="button"
+    >
+      Logout
+    </button>
+  </header>
+
+  <main class="dashboard-content">
+
+    <p>
+      <a href="admin.html" style="color:#6f4e37;">
+        ← Back to Admin Dashboard
+      </a>
+    </p>
+
+    <section class="welcome-card">
+      <h1>📝 Activities & Grades</h1>
+      <p>
+        Create assignments, review submissions,
+        and manage student grades.
+      </p>
+    </section>
+
+    <p
+      id="activityMessage"
+      class="message"
+      role="status"
+      aria-live="polite"
+    ></p>
+
+    <!-- CREATE ACTIVITY -->
+    <section class="activity-section">
+      <h2 id="activityFormTitle">
+        Create New Activity
+      </h2>
+
+      <form
+        id="activityForm"
+        class="activity-form"
+        hidden
+      >
+
+        <div>
+          <label for="activityTitle">
+            Activity Title
+          </label>
+
+          <input
+            type="text"
+            id="activityTitle"
+            maxlength="200"
+            placeholder="Programming Activity 1"
+            required
+          >
+        </div>
+
+        <div>
+          <label for="activityDescription">
+            Description
+          </label>
+
+          <textarea
+            id="activityDescription"
+            placeholder="Brief description"
+          ></textarea>
+        </div>
+
+        <div>
+          <label for="activityInstructions">
+            Instructions
+          </label>
+
+          <textarea
+            id="activityInstructions"
+            placeholder="Explain what students need to do"
+          ></textarea>
+        </div>
+
+        <div>
+          <label for="activityDueDate">
+            Deadline (Optional)
+          </label>
+
+          <input
+            type="datetime-local"
+            id="activityDueDate"
+          >
+        </div>
+
+        <div>
+          <label for="activityMaxScore">
+            Maximum Score
+          </label>
+
+          <input
+            type="number"
+            id="activityMaxScore"
+            min="1"
+            step="1"
+            value="100"
+            required
+          >
+        </div>
+
+        <button
+          type="submit"
+          id="saveActivityBtn"
+          class="primary-action"
+        >
+          Save Activity
+        </button>
+
+        <button
+          type="button"
+          id="cancelActivityBtn"
+          class="secondary-action"
+          hidden
+        >
+          Cancel Editing
+        </button>
+
+      </form>
+    </section>
+
+    <!-- EXISTING ACTIVITIES -->
+    <section class="activity-section">
+      <h2>Existing Activities</h2>
+
+      <p id="activityCount" class="muted">
+        Loading activities...
+      </p>
+
+      <div id="activitiesList"></div>
+    </section>
+
+    <!-- STUDENT SUBMISSIONS -->
+    <section class="activity-section">
+      <h2 id="submissionsTitle">
+        Student Submissions
+      </h2>
+
+      <p id="submissionsHint" class="muted">
+        Select View Submissions on an activity.
+      </p>
+
+      <div id="submissionsList"></div>
+    </section>
+
+  </main>
+
+  <script
+    type="module"
+    src="activities-admin.js"
+  ></script>
+
+</body>
+        </html>
+        
