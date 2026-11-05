@@ -1,0 +1,245 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>Student Dashboard | Smart Academic</title>
+
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+
+    /* =====================================
+       STUDENT DASHBOARD
+    ===================================== */
+
+    .dashboard-card {
+      display: block;
+      color: inherit;
+      text-decoration: none;
+      min-width: 0;
+    }
+
+    a.dashboard-card {
+      transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+    }
+
+    a.dashboard-card:hover {
+      transform: translateY(-3px);
+      box-shadow:
+        0 6px 18px rgba(0,0,0,0.08);
+    }
+
+    a.dashboard-card:focus-visible {
+      outline: 3px solid #6F4E37;
+      outline-offset: 3px;
+    }
+
+    .coming-soon {
+      opacity: 0.75;
+      cursor: default;
+    }
+
+    .coming-soon-label {
+      display: inline-block;
+      margin-top: 8px;
+      padding: 5px 10px;
+      background: #E8DCCC;
+      color: #6F4E37;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: bold;
+    }
+
+    .dashboard-card p {
+      overflow-wrap: anywhere;
+    }
+
+  </style>
+
+</head>
+
+<body class="dashboard-page">
+
+  <!-- =====================================
+       TOP NAVIGATION
+  ===================================== -->
+
+  <header class="topbar">
+
+    <div class="brand">
+      ☕ Smart Academic
+    </div>
+
+    <button
+      id="logoutBtn"
+      class="logout-btn"
+      type="button"
+    >
+      Logout
+    </button>
+
+  </header>
+
+
+  <!-- =====================================
+       MAIN DASHBOARD
+  ===================================== -->
+
+  <main class="dashboard-content">
+
+    <!-- WELCOME SECTION -->
+
+    <section class="welcome-card">
+
+      <h1 id="welcomeText">
+        Welcome, Student!
+      </h1>
+
+      <p>
+        Ready for another productive day?
+      </p>
+
+    </section>
+
+
+    <!-- DASHBOARD TITLE -->
+
+    <h2 style="margin-bottom:20px;">
+      Student Dashboard
+    </h2>
+
+
+    <!-- =====================================
+         DASHBOARD FEATURES
+    ===================================== -->
+
+    <section class="dashboard-grid">
+
+      <!-- MY LECTURES -->
+
+      <a
+        href="lectures-student.html"
+        class="dashboard-card"
+      >
+
+        <div class="icon">📚</div>
+
+        <h3>My Lectures</h3>
+
+        <p>
+          View lectures and learning materials
+          uploaded by the Admin.
+        </p>
+
+      </a>
+
+
+      <!-- ACTIVITIES AND GRADES -->
+
+      <a
+        href="activities-student.html"
+        class="dashboard-card"
+      >
+
+        <div class="icon">📝</div>
+
+        <h3>Activities & Grades</h3>
+
+        <p>
+          View assignments, submit answers,
+          upload documents, and check
+          grades and professor feedback.
+        </p>
+
+      </a>
+
+
+      <!-- QR ATTENDANCE -->
+
+      <a
+        href="attendance-student.html"
+        class="dashboard-card"
+      >
+
+        <div class="icon">📷</div>
+
+        <h3>QR Attendance</h3>
+
+        <p>
+          Scan your classroom QR code
+          and automatically record
+          your attendance.
+        </p>
+
+      </a>
+
+
+      <!-- CALENDAR AND SCHEDULE -->
+
+      <a
+        href="calendar.html"
+        class="dashboard-card"
+      >
+
+        <div class="icon">📅</div>
+
+        <h3>Calendar & Schedule</h3>
+
+        <p>
+          View class schedules, examinations,
+          holidays, school events, and
+          your recorded QR attendance.
+        </p>
+
+      </a>
+
+
+
+      <!-- MY ANALYTICS AND REPORTS -->
+
+      <a
+        href="analytics-student.html"
+        class="dashboard-card"
+      >
+
+        <div class="icon">📊</div>
+
+        <h3>My Analytics & Reports</h3>
+
+        <p>
+          Track your QR attendance,
+          submitted activities, grades,
+          scores, and academic progress.
+        </p>
+
+      </a>
+
+
+    </section>
+
+  </main>
+
+
+  <!-- =====================================
+       AUTHENTICATION AND ROLE PROTECTION
+  ===================================== -->
+
+  <script
+    type="module"
+    src="guard.js"
+  ></script>
+
+</body>
+
+</html>
