@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>QR Attendance | Smart Academic</title>
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="dashboard-page">
+
+  <header class="topbar">
+    <div class="brand">☕ Smart Academic</div>
+
+    <button id="logoutBtn" class="logout-btn" type="button">
+      Logout
+    </button>
+  </header>
+
+  <main class="dashboard-content">
+
+    <p>
+      <a href="admin.html" class="back-link">
+        ← Back to Admin Dashboard
+      </a>
+    </p>
+
+    <section class="welcome-card">
+      <h1>📷 QR Attendance Management</h1>
+      <p>
+        Generate attendance QR codes and monitor student attendance.
+      </p>
+    </section>
+
+    <p
+      id="attendanceMessage"
+      class="message"
+      role="status"
+      aria-live="polite"
+    ></p>
+
+    <!-- CREATE SESSION -->
+
+    <section class="attendance-section no-print">
+
+      <h2>Create Attendance Session</h2>
+
+      <form id="sessionForm" class="attendance-form">
+
+        <div>
+          <label for="sessionTitle">
+            Class / Session Name
+          </label>
+
+          <input
+            type="text"
+            id="sessionTitle"
+            maxlength="150"
+            placeholder="Example: BSCS 3C"
+            required
+          >
+        </div>
+
+        <div>
+          <label for="sessionDuration">
+            Attendance Duration
+          </label>
+
+          <select id="sessionDuration" required>
+            <option value="15">15 Minutes</option>
+            <option value="30">30 Minutes</option>
+            <option value="45">45 Minutes</option>
+            <option value="60" selected>1 Hour</option>
+            <option value="90">1 Hour 30 Minutes</option>
+            <option value="120">2 Hours</option>
+            <option value="180">3 Hours</option>
+            <option value="240">4 Hours</option>
+          </select>
+        </div>
+
+        <button
+          type="submit"
+          id="createSessionBtn"
+          class="primary-action full-button"
+        >
+          Generate Attendance QR
+        </button>
+
+      </form>
+
+    </section>
+
+    <!-- GENERATED QR -->
+
+    <section
+      class="attendance-section qr-section"
+      id="qrPanel"
+      hidden
+    >
+
+      <h2>Generated Attendance QR</h2>
+
+      <div class="qr-panel">
+
+        <h3 id="qrSessionTitle">
+          Attendance Session
+        </h3>
+
+        <p id="qrSessionDetails" class="muted"></p>
+
+        <div id="qrCode"></div>
+
+        <div class="token-container">
+
+          <p class="token-heading">
+            Attendance QR Token
+          </p>
+
+          <code id="qrTokenText" class="qr-token">
+            No token generated
+          </code>
+
+          <button
+            type="button"
+            id="copyTokenBtn"
+            class="secondary-action copy-token-btn"
+          >
+            Copy QR Token
+          </button>
+
+        </div>
+
+        <p class="muted qr-instructions">
+          Students must log in to their student accounts
+          before scanning or entering this token.
+        </p>
+
+        <div class="attendance-actions no-print">
+
+          <button
+            type="button"
+            id="printQRBtn"
+            class="primary-action"
+          >
+            Print QR Code
+          </button>
+
+          <button
+            type="button"
+            id="hideQRBtn"
+            class="secondary-action"
+          >
+            Hide QR
+          </button>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- SESSION HISTORY -->
+
+    <section class="attendance-section">
+
+      <h2>Attendance Sessions</h2>
+
+      <p id="sessionCount" class="muted">
+        Loading sessions...
+      </p>
+
+      <div id="sessionsList"></div>
+
+    </section>
+
+    <!-- ATTENDANCE RECORDS -->
+
+    <section class="attendance-section">
+
+      <h2 id="attendanceTitle">
+        Student Attendance Records
+      </h2>
+
+      <p id="attendanceCount" class="muted">
+        Select View Attendance on a session.
+      </p>
+
+      <div id="attendanceList"></div>
+
+    </section>
+
+  </main>
+
+  <!-- QR GENERATOR -->
+
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"
+  ></script>
+
+  <!-- ADMIN JAVASCRIPT -->
+
+  <script
+    type="module"
+    src="attendance-admin.js?v=5"
+  ></script>
+
+</body>
+  </html>
