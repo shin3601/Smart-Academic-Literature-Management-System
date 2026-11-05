@@ -1,0 +1,189 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>My Lectures | Smart Academic</title>
+
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+
+    .lecture-section {
+      margin-top: 20px;
+    }
+
+    .lecture-item {
+      background: #F7F2E8;
+      padding: 20px;
+      margin-top: 15px;
+      border-radius: 12px;
+      border: 1px solid #E6D8C6;
+    }
+
+    .lecture-item h3 {
+      color: #6F4E37;
+      margin-bottom: 10px;
+    }
+
+    .lecture-description {
+      color: #806C5D;
+      margin-bottom: 12px;
+    }
+
+    .lecture-content {
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+      line-height: 1.7;
+      margin-top: 12px;
+    }
+
+    .lecture-date {
+      color: #806C5D;
+      font-size: 13px;
+      margin-top: 12px;
+    }
+
+    .attachment-button {
+      display: inline-block;
+      margin-top: 15px;
+      padding: 11px 16px;
+      background: #6F4E37;
+      color: white;
+      border: none;
+      border-radius: 9px;
+      font: inherit;
+      cursor: pointer;
+    }
+
+    .attachment-button:hover {
+      background: #3B2921;
+    }
+
+    .attachment-button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .lecture-message {
+      margin-top: 15px;
+      font-weight: 600;
+      overflow-wrap: anywhere;
+    }
+
+    .lecture-message.error {
+      color: #A83C3C;
+    }
+
+    .lecture-message.success {
+      color: #28734A;
+    }
+
+    .empty-message {
+      color: #806C5D;
+      padding: 15px 0;
+    }
+
+    button:focus-visible,
+    a:focus-visible {
+      outline: 3px solid #C8956C;
+      outline-offset: 3px;
+    }
+
+  </style>
+
+</head>
+
+<body class="dashboard-page">
+
+  <!-- TOP NAVIGATION -->
+  <header class="topbar">
+
+    <div class="brand">
+      ☕ Smart Academic
+    </div>
+
+    <button
+      id="logoutBtn"
+      class="logout-btn"
+      type="button"
+    >
+      Logout
+    </button>
+
+  </header>
+
+  <!-- MAIN CONTENT -->
+  <main class="dashboard-content">
+
+    <p>
+      <a
+        href="student.html"
+        style="color:#6F4E37; text-decoration:none;"
+      >
+        ← Back to Student Dashboard
+      </a>
+    </p>
+
+    <!-- WELCOME -->
+    <section class="welcome-card">
+
+      <h1>📚 My Lectures</h1>
+
+      <p>
+        Access your lectures and learning
+        materials uploaded by your Admin.
+      </p>
+
+    </section>
+
+    <!-- MESSAGE -->
+    <p
+      id="lectureMessage"
+      class="lecture-message"
+      role="status"
+      aria-live="polite"
+    ></p>
+
+    <!-- LECTURES -->
+    <section class="dashboard-card lecture-section">
+
+      <h2>Available Lectures</h2>
+
+      <p
+        id="lectureCount"
+        class="lecture-date"
+      >
+        Loading lectures...
+      </p>
+
+      <div id="lecturesList">
+
+        <p class="empty-message">
+          Please wait while we load your lectures.
+        </p>
+
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- STUDENT LECTURE JAVASCRIPT -->
+  <script
+    type="module"
+    src="lectures-student.js"
+  ></script>
+
+</body>
+
+        </html>
+        
