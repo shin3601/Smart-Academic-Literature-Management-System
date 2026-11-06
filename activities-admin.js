@@ -797,3 +797,311 @@ function displaySubmission(
     student?.student_id || "Unavailable";
 
   // STUDENT INFORMATION
+
+card.appendChild(
+    createText("h3", studentName)
+  );
+
+  card.appendChild(
+    createText(
+      "p",
+      "Student ID: " + studentNumber,
+      "muted"
+    )
+  );
+
+  card.appendChild(
+    createText(
+      "p",
+      "Submitted: " +
+      formatDate(submission.submitted_at),
+      "muted"
+    )
+  );
+
+  // STUDENT WRITTEN ANSWER
+
+  card.appendChild(
+    createText(
+      "strong",
+      "Student's Answer"
+    )
+  );
+
+  card.appendChild(
+    createText(
+      "p",
+      submission.answer?.trim() ||
+      "No written answer. Student submitted a file."
+    )
+  );
+
+  // STUDENT ATTACHED FILE
+
+  if (submission.file_path) {
+    card.appendChild(
+      createText(
+        "p",
+        "📎 Attached File: " +
+        (submission.file_name || "Assignment"),
+        "muted"
+      )
+    );
+
+    const fileButton = createButton(
+      "📎 Open Submitted File",
+      "secondary-action",
+      () => openSubmissionFile(
+        submission,
+        fileButton,
+        card
+      )
+    );
+
+    card.appendChild(fileButton);
+
+  } else {
+    card.appendChild(
+      createText(
+        "p",
+        "No attached file.",
+        "muted"
+      )
+    );
+  }
+
+  // GRADING STATUS
+
+  const graded = isGraded(submission);
+
+  card.appendChild(
+    createText(
+      "span",
+      graded ? "✓ GRADED" : "⏳ NOT GRADED",
+      graded ? "status submitted" : "status pending"
+    )
+  );
+
+  if (graded) {
+    card.appendChild(
+      createText(
+        "p",
+        "Current Grade: " +
+        submission.score +
+        " / " +
+        activity.max_score
+      )
+    );
+
+    const percentage =
+      (
+        Number(submission.score) /
+        Number(activity.max_score)
+      ) * 100;
+
+    card.appendChild(
+      createText(
+        "p",
+        "Percentage: " +
+        percentage.toFixed(1) + "%"
+      )
+    );
+
+    card.appendChild(
+      createText(
+        "p",
+        "Graded on: " +
+        formatDate(submission.graded_at),
+        "muted"
+      )
+    );
+  }
+
+  // GRADING FORM
+
+  const gradeForm = document.createElement("form");
+
+  gradeForm.className = "grade-form";
+
+  const scoreLabel = createText(
+    "label",
+    "Student Score (0 to " +
+    activity.max_score + ")"
+  );
+
+  const scoreInput = document.createElement("input");
+
+  scoreInput.type = "number";
+  scoreInput.min = "0";
+  scoreInput.max = String(activity.max_score);
+  scoreInput.step = "1";
+  scoreInput.required = true;
+
+  if (graded) {
+    scoreInput.value = submission.score;
+  }
+
+  const feedbackLabel = createText(
+    "label",
+    "Professor Feedback"
+  );
+
+  const feedbackInput =
+    document.createElement("textarea");
+
+  feedbackInput.value =
+    submission.feedback || "";
+
+  feedbackInput.placeholder =
+    "Write comments, corrections, or suggestions for the student.";
+
+  const gradeButton = document.createElement("button");
+
+  gradeButton.type = "submit";
+  gradeButton.className = "primary-action";
+
+  gradeButton.textContent = graded
+    ? "Update Grade"
+    : "Save Grade";
+
+  gradeForm.append(
+    scoreLabel,
+    scoreInput,
+    feedbackLabel,
+    feedbackInput,
+    gradeButton
+  );
+
+  // SAVE OR UPDATE GRADE
+
+  gradeForm.addEventListener(
+    "submit",
+    async event => {
+      event.preventDefault();
+
+      if (!currentAdmin) {
+        showMessage("Admin access required.");
+        return;
+      }
+
+      if (scoreInput.value.trim() === "") {
+        showMessage("Please enter a student score.");
+        return;
+      }
+
+      const score = Number(scoreInput.value);
+      const maximum = Number(activity.max_score);
+
+      if (
+        !Number.isSafeInteger(score) ||
+        score < 0 ||
+        score > maximum
+      ) {
+        showMessage(
+          "Enter a whole-number score between 0 and " +
+          maximum + "."
+        );
+
+        return;
+      }
+
+      gradeButton.disabled = true;
+      gradeButton.textContent = "Saving Grade...";
+
+      try {
+        
+const { data, error } = await supabase
+  .from("activity_submissions")
+  .update({
+    score: score,
+    feedback: feedbackInput.value.trim() || null,
+    graded_at: new Date().toISOString()
+  })
+  .eq("id", submission.id)
+  .select("id")
+  .single();
+
+if (error) throw error;
+
+if (!data) {
+  throw new Error(
+    "The database did not confirm the grade update."
+  );
+}
+
+showMessage(
+  "Grade saved successfully for " +
+  studentName + "!",
+  "success"
+);
+
+// Reload submissions to display updated grade
+await loadSubmissions(activity);
+
+} catch (error) {
+
+  console.error("Save grade:", error);
+
+  showMessage(
+    error.message ||
+    "Unable to save student grade."
+  );
+
+} finally {
+
+  gradeButton.disabled = false;
+
+  gradeButton.textContent = graded
+    ? "Update Grade"
+    : "Save Grade";
+
+}
+
+});
+
+card.appendChild(gradeForm);
+
+submissionsList.appendChild(card);
+
+}
+
+// ========================================
+// LOGOUT
+// ========================================
+
+logoutButton.addEventListener(
+  "click",
+  async () => {
+
+    logoutButton.disabled = true;
+
+    try {
+
+      const { error } =
+        await supabase.auth.signOut();
+
+      if (error) throw error;
+
+      window.location.replace("index.html");
+
+    } catch (error) {
+
+      console.error("Logout:", error);
+
+      alert(
+        error.message ||
+        "Unable to logout."
+      );
+
+      logoutButton.disabled = false;
+
+    }
+
+  }
+);
+
+// ========================================
+// START ADMIN SYSTEM
+// ========================================
+
+initialize();
