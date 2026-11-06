@@ -1,0 +1,730 @@
+/* ===============================
+   SMART ACADEMIC
+   Cafe Theme
+================================ */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --cream: #f7f2e8;
+  --warm-white: #fffdf8;
+  --coffee: #6f4e37;
+  --dark-coffee: #3b2921;
+  --caramel: #c8956c;
+  --beige: #e8dccb;
+  --text-light: #7b6b61;
+
+  --success: #66856a;
+  --danger: #b85c50;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background: var(--cream);
+  color: var(--dark-coffee);
+}
+
+/* ===============================
+   AUTH PAGE
+================================ */
+
+.auth-page {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 25px 18px;
+
+  background: linear-gradient(
+    145deg,
+    #f7f2e8,
+    #eadbc7
+  );
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 420px;
+  background: var(--warm-white);
+  border-radius: 24px;
+  padding: 35px 25px;
+
+  box-shadow:
+    0 15px 40px rgba(59, 41, 33, 0.12);
+}
+
+.logo {
+  width: 65px;
+  height: 65px;
+  margin: 0 auto 15px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: var(--beige);
+  border-radius: 20px;
+  font-size: 32px;
+}
+
+.auth-card h1 {
+  text-align: center;
+  font-size: 27px;
+  margin-bottom: 7px;
+}
+
+.subtitle {
+  text-align: center;
+  color: var(--text-light);
+  font-size: 14px;
+  margin-bottom: 30px;
+}
+
+/* ===============================
+   FORM
+================================ */
+
+.input-group {
+  margin-bottom: 18px;
+}
+
+.input-group label {
+  display: block;
+  margin-bottom: 7px;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 14px;
+  border: 1px solid var(--beige);
+  border-radius: 12px;
+  background: #ffffff;
+  color: var(--dark-coffee);
+  font-size: 15px;
+  outline: none;
+  transition: 0.2s;
+}
+
+.input-group input:focus {
+  border-color: var(--coffee);
+
+  box-shadow:
+    0 0 0 3px rgba(111, 78, 55, 0.08);
+}
+
+/* ===============================
+   PASSWORD
+================================ */
+
+.password-box {
+  position: relative;
+}
+
+.password-box input {
+  padding-right: 50px;
+}
+
+.password-toggle {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 18px;
+}
+
+/* ===============================
+   BUTTON
+================================ */
+
+.primary-btn {
+  width: 100%;
+  padding: 14px;
+  border: none;
+  border-radius: 12px;
+  background: var(--coffee);
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.primary-btn:hover {
+  background: var(--dark-coffee);
+}
+
+.primary-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ===============================
+   MESSAGE
+================================ */
+
+.message {
+  min-height: 22px;
+  margin-top: 15px;
+  text-align: center;
+  font-size: 14px;
+  overflow-wrap: anywhere;
+}
+
+.message.success {
+  color: var(--success);
+}
+
+.message.error {
+  color: var(--danger);
+}
+
+/* ===============================
+   FOOTER
+================================ */
+
+.auth-footer {
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid var(--beige);
+  text-align: center;
+  font-size: 14px;
+  color: var(--text-light);
+}
+
+.auth-footer a {
+  color: var(--coffee);
+  font-weight: bold;
+  text-decoration: none;
+}
+
+/* ===============================
+   DASHBOARD
+================================ */
+
+.dashboard-page {
+  min-height: 100vh;
+  background: var(--cream);
+}
+
+.topbar {
+  background: var(--warm-white);
+  padding: 18px 20px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  box-shadow:
+    0 3px 15px rgba(59, 41, 33, 0.08);
+}
+
+.brand {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.logout-btn {
+  padding: 9px 15px;
+  border: none;
+  border-radius: 10px;
+  background: var(--dark-coffee);
+  color: white;
+  cursor: pointer;
+}
+
+.dashboard-content {
+  max-width: 900px;
+  margin: auto;
+  padding: 30px 20px;
+}
+
+.welcome-card {
+  padding: 25px;
+  border-radius: 20px;
+  background: var(--coffee);
+  color: white;
+  margin-bottom: 25px;
+}
+
+.welcome-card h1 {
+  margin-bottom: 8px;
+}
+
+.dashboard-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(auto-fit, minmax(150px, 1fr));
+
+  gap: 15px;
+}
+
+.dashboard-card {
+  background: var(--warm-white);
+  padding: 20px;
+  border-radius: 16px;
+
+  box-shadow:
+    0 5px 20px rgba(59, 41, 33, 0.07);
+}
+
+.dashboard-card .icon {
+  font-size: 27px;
+  margin-bottom: 12px;
+}
+
+.dashboard-card h3 {
+  margin-bottom: 6px;
+}
+
+.dashboard-card p {
+  color: var(--text-light);
+  font-size: 14px;
+}
+
+/* ===============================
+   NAVIGATION
+================================ */
+
+.back-link {
+  display: inline-block;
+  margin-bottom: 10px;
+  color: var(--coffee);
+  text-decoration: none;
+}
+
+.back-link:hover {
+  text-decoration: underline;
+}
+
+/* ===============================
+   ATTENDANCE SECTIONS
+================================ */
+
+.attendance-section {
+  margin-top: 20px;
+  padding: 22px;
+
+  background: var(--warm-white);
+
+  border: 1px solid #e8ddce;
+  border-radius: 16px;
+
+  box-shadow:
+    0 5px 18px rgba(59, 41, 33, 0.04);
+}
+
+.attendance-section h2 {
+  color: var(--coffee);
+  margin-bottom: 10px;
+  font-size: 23px;
+}
+
+.attendance-section h3 {
+  color: var(--coffee);
+}
+
+/* ===============================
+   ATTENDANCE FORM
+================================ */
+
+.attendance-form {
+  display: grid;
+  gap: 14px;
+  margin-top: 18px;
+}
+
+.attendance-form label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 600;
+  color: var(--coffee);
+}
+
+.attendance-form input,
+.attendance-form select {
+  width: 100%;
+  padding: 14px;
+
+  border: 1px solid #d8c8b6;
+  border-radius: 10px;
+
+  background: white;
+  color: var(--dark-coffee);
+
+  font: inherit;
+  outline: none;
+}
+
+.attendance-form input:focus,
+.attendance-form select:focus {
+  border-color: var(--coffee);
+
+  box-shadow:
+    0 0 0 3px rgba(111, 78, 55, 0.08);
+}
+
+.full-button {
+  width: 100%;
+  padding: 13px;
+}
+
+/* ===============================
+   ATTENDANCE BUTTONS
+================================ */
+
+.primary-action,
+.secondary-action,
+.danger-action {
+  padding: 11px 15px;
+  border: none;
+  border-radius: 10px;
+  font: inherit;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.primary-action {
+  background: var(--coffee);
+  color: white;
+}
+
+.primary-action:hover {
+  background: var(--dark-coffee);
+}
+
+.secondary-action {
+  background: #e7d8c7;
+  color: #493226;
+}
+
+.secondary-action:hover {
+  background: var(--beige);
+}
+
+.danger-action {
+  background: #a83c3c;
+  color: white;
+}
+
+.danger-action:hover {
+  background: #8d3030;
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ===============================
+   ATTENDANCE SESSION CARDS
+================================ */
+
+.attendance-session {
+  background: var(--cream);
+  padding: 17px;
+  margin-top: 14px;
+
+  border: 1px solid #e4d5c3;
+  border-radius: 12px;
+}
+
+.attendance-session h3 {
+  margin-bottom: 10px;
+  font-size: 20px;
+  overflow-wrap: anywhere;
+}
+
+.attendance-session p {
+  margin-top: 5px;
+}
+
+.attendance-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+  margin-top: 14px;
+}
+
+/* ===============================
+   SESSION STATUS
+================================ */
+
+.status {
+  display: inline-block;
+  padding: 7px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.status.active {
+  background: #dcece0;
+  color: #276340;
+}
+
+.status.closed {
+  background: #eedada;
+  color: #913a3a;
+}
+
+.status.expired {
+  background: #f5e3ba;
+  color: #76530f;
+}
+
+.status.upcoming {
+  background: #e2e6f2;
+  color: #46557c;
+}
+
+.status.unknown {
+  background: #e8dccb;
+  color: var(--dark-coffee);
+}
+
+/* ===============================
+   GENERATED QR PANEL
+================================ */
+
+.qr-panel {
+  margin-top: 18px;
+  padding: 20px;
+
+  text-align: center;
+
+  background: var(--cream);
+
+  border: 1px solid #e4d5c3;
+  border-radius: 12px;
+}
+
+.qr-panel h3 {
+  margin-bottom: 10px;
+  font-size: 21px;
+}
+
+#qrCode {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  margin: 18px auto;
+  padding: 15px;
+
+  background: white;
+  border-radius: 12px;
+
+  width: fit-content;
+  max-width: 100%;
+}
+
+#qrCode img,
+#qrCode canvas {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+/* ===============================
+   QR TOKEN
+================================ */
+
+.token-container {
+  margin-top: 20px;
+  padding: 15px;
+
+  background: var(--warm-white);
+
+  border: 1px solid var(--beige);
+  border-radius: 12px;
+}
+
+.token-heading {
+  color: var(--coffee);
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.qr-token {
+  display: block;
+
+  padding: 12px;
+  margin-bottom: 12px;
+
+  background: #f4eee4;
+  border: 1px solid var(--beige);
+  border-radius: 9px;
+
+  color: var(--dark-coffee);
+
+  font-size: 13px;
+  line-height: 1.6;
+
+  overflow-wrap: anywhere;
+  user-select: text;
+}
+
+.copy-token-btn {
+  width: 100%;
+}
+
+.qr-instructions {
+  margin-top: 15px;
+}
+
+/* ===============================
+   ATTENDANCE RECORDS
+================================ */
+
+.student-record {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+
+  padding: 13px;
+  margin-top: 10px;
+
+  background: var(--cream);
+
+  border: 1px solid #e4d5c3;
+  border-radius: 10px;
+}
+
+.student-record strong {
+  display: block;
+  color: var(--coffee);
+  margin-bottom: 5px;
+}
+
+.present {
+  color: #28734a;
+  font-weight: bold;
+}
+
+.absent {
+  color: #a83c3c;
+  font-weight: bold;
+}
+
+/* ===============================
+   TEXT HELPERS
+================================ */
+
+.muted {
+  color: #806c5d;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+/* ===============================
+   MOBILE RESPONSIVENESS
+================================ */
+
+@media (max-width: 600px) {
+
+  .topbar {
+    padding: 15px;
+  }
+
+  .brand {
+    font-size: 16px;
+  }
+
+  .dashboard-content {
+    padding: 20px 14px;
+  }
+
+  .welcome-card {
+    padding: 22px;
+  }
+
+  .welcome-card h1 {
+    font-size: 25px;
+  }
+
+  .attendance-section {
+    padding: 18px;
+  }
+
+  .attendance-section h2 {
+    font-size: 21px;
+  }
+
+  .attendance-actions {
+    flex-direction: column;
+  }
+
+  .attendance-actions button {
+    width: 100%;
+  }
+
+  .student-record {
+    align-items: flex-start;
+  }
+
+  .qr-panel {
+    padding: 14px;
+  }
+
+}
+
+/* ===============================
+   PRINT QR CODE
+================================ */
+
+@media print {
+
+  body * {
+    visibility: hidden;
+  }
+
+  #qrPanel,
+  #qrPanel * {
+    visibility: visible;
+  }
+
+  #qrPanel {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+
+    margin: 0;
+    padding: 10px;
+
+    border: none;
+    background: white;
+    box-shadow: none;
+  }
+
+  #qrPanel .qr-panel {
+    border: none;
+    background: white;
+  }
+
+  #qrPanel .no-print {
+    display: none !important;
+  }
+
+  #qrCode {
+    margin: 20px auto;
+  }
+
+  }
