@@ -797,3 +797,330 @@ function displayAnswerForm(card, activity) {
         showMessage("Student login required.");
         return;
     }
+
+  const answer = answerInput.value.trim();
+
+      const file =
+        fileInput.files?.[0] || null;
+
+      if (!answer && !file) {
+        showMessage(
+          "Please write an answer or attach a file."
+        );
+
+        return;
+      }
+
+      if (isClosed(activity)) {
+        showMessage(
+          "This activity has passed its deadline."
+        );
+
+        await loadActivities();
+        return;
+      }
+
+      // VALIDATE FILE
+
+      let extension = null;
+
+      try {
+        extension = validateFile(file);
+
+      } catch (error) {
+        showMessage(error.message);
+        return;
+      }
+
+      // CONFIRM SUBMISSION
+
+      const confirmed = confirm(
+        "Submit this activity?\n\n" +
+        "You cannot edit your submission after submitting."
+      );
+
+      if (!confirmed) return;
+
+      // DISABLE INPUTS
+
+      submitButton.disabled = true;
+      answerInput.disabled = true;
+      fileInput.disabled = true;
+
+      let uploadedPath = null;
+      let fileUploaded = false;
+
+      try {
+        let fileName = null;
+
+        // ==================================
+        // UPLOAD FILE TO SUPABASE STORAGE
+        // ==================================
+
+        if (file) {
+          submitButton.textContent =
+            "Uploading file...";
+
+          const uniqueName =
+            createFileId() + "." + extension;
+
+          uploadedPath =
+            currentStudent.id +
+            "/" +
+            activity.id +
+            "/" +
+            uniqueName;
+
+          const { error: uploadError } =
+            await supabase.storage
+              .from(BUCKET)
+              .upload(
+                uploadedPath,
+                file,
+                {
+                  upsert: false,
+                  contentType: file.type ||
+                    "application/octet-stream"
+                }
+              );
+
+          if (uploadError) {
+            throw uploadError;
+          }
+
+          fileUploaded = true;
+          fileName = file.name;
+        }
+
+        // ==================================
+        // SAVE SUBMISSION TO DATABASE
+        // ==================================
+
+        submitButton.textContent =
+          "Saving submission...";
+
+        const { error: submissionError } =
+          await supabase
+            .from("activity_submissions")
+            .insert({
+              activity_id: activity.id,
+              student_id: currentStudent.id,
+              answer: answer || null,
+              file_path: uploadedPath,
+              file_name: fileName
+            });
+
+        if (submissionError) {
+          throw submissionError;
+        }
+
+        // ==================================
+        // REFRESH ACTIVITIES
+        // ==================================
+
+        const refreshed = await loadActivities();
+
+        if (refreshed) {
+          showMessage(
+            "Activity submitted successfully!",
+            "success"
+          );
+
+        } else {
+          showMessage(
+            "Submission saved successfully, but the activity list could not refresh. Please reload the page.",
+            "success"
+          );
+        }
+
+      } catch (error) {
+        console.error(
+          "Student submission:",
+          error
+        );
+
+        // CLEAN UP UPLOADED FILE
+        // IF DATABASE INSERT FAILED
+
+        if (fileUploaded && uploadedPath) {
+          const { error: cleanupError } =
+            await supabase.storage
+              .from(BUCKET)
+              .remove([uploadedPath]);
+
+          if (cleanupError) {
+            console.warn(
+              "File cleanup failed:",
+              cleanupError.message
+            );
+          }
+        }
+
+        showMessage(
+          error.message ||
+          "Unable to submit this activity."
+        );
+
+      } finally {
+        submitButton.disabled = false;
+        answerInput.disabled = false;
+        fileInput.disabled = false;
+
+        submitButton.textContent =
+          "Submit Activity";
+      }
+    }
+  );
+
+  card.appendChild(form);
+}
+
+// ==========================================
+// DISPLAY STUDENT GRADE AND FEEDBACK
+// ==========================================
+
+
+function displayGrade(
+  card,
+  activity,
+  submission
+) {
+  const gradeBox = document.createElement("div");
+
+  gradeBox.className = "grade-box";
+
+  const graded = isGraded(submission);
+
+  const score = Number(submission.score);
+  const maximum = Number(activity.max_score);
+
+  // ========================================
+  // PENDING GRADE
+  // ========================================
+
+  if (!graded) {
+    gradeBox.appendChild(
+      createText(
+        "span",
+        "⏳ WAITING FOR GRADING",
+        "status pending"
+      )
+    );
+
+    gradeBox.appendChild(
+      createText(
+        "h3",
+        "Grade: Pending"
+      )
+    );
+
+    gradeBox.appendChild(
+      createText(
+        "p",
+        "Your professor has not graded this activity yet."
+      )
+    );
+
+  }
+
+  // ========================================
+  // GRADED
+  // ========================================
+
+  else {
+    gradeBox.appendChild(
+      createText(
+        "span",
+        "✓ GRADED",
+        "status submitted"
+      )
+    );
+
+    // DISPLAY SCORE
+
+    gradeBox.appendChild(
+      createText(
+        "h3",
+        "Your Grade: " +
+        score + " / " + maximum
+      )
+    );
+
+    // CALCULATE PERCENTAGE
+
+    if (
+      Number.isFinite(score) &&
+      Number.isFinite(maximum) &&
+      maximum > 0
+    ) {
+      const percentage =
+        (score / maximum) * 100;
+
+      gradeBox.appendChild(
+        createText(
+          "p",
+          "Percentage: " +
+          percentage.toFixed(2) + "%"
+        )
+      );
+    }
+
+    // PROFESSOR FEEDBACK
+
+    gradeBox.appendChild(
+      createText(
+        "strong",
+        "Professor Feedback"
+      )
+    );
+
+    gradeBox.appendChild(
+      createText(
+        "p",
+        submission.feedback ||
+        "No feedback provided."
+      )
+    );
+
+    // DATE GRADED
+
+    gradeBox.appendChild(
+      createText(
+        "p",
+        "Graded on: " +
+        formatDate(submission.graded_at),
+        "muted"
+      )
+    );
+  }
+
+  // ADD GRADE BOX TO ACTIVITY CARD
+
+  card.appendChild(gradeBox);
+}
+// ==========================================
+// LOGOUT
+// ==========================================
+
+logoutButton.addEventListener("click", async () => {
+  logoutButton.disabled = true;
+
+  try {
+    const { error } = await supabase.auth.signOut();
+
+    if (error) throw error;
+
+    window.location.replace("index.html");
+
+  } catch (error) {
+    console.error("Logout:", error);
+    showMessage(error.message || "Logout failed.");
+    logoutButton.disabled = false;
+  }
+});
+
+// ==========================================
+// START STUDENT ACTIVITIES
+// ==========================================
+
+initialize();
