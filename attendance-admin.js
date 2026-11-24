@@ -915,4 +915,78 @@ async function deleteAttendanceRecord(
     
     if (!refreshed) {
       showMessage(
-        "Record deleted. Reload att
+             "Record deleted. Reload attendance to verify the updated list.",
+        "success"
+      );
+      return;
+    }
+
+    showMessage(
+      student.full_name +
+      "'s attendance record was deleted.",
+      "success"
+    );
+
+  } catch (error) {
+    console.error(
+      "Delete attendance:",
+      error
+    );
+
+    showMessage(
+      error.message ||
+      "Unable to delete attendance."
+    );
+
+    deleteButton.disabled = false;
+    deleteButton.textContent =
+      "🗑 Delete Attendance";
+
+  } finally {
+    deletingRecordId = null;
+  }
+}
+
+// ==========================================
+// AUTOMATIC SESSION STATUS REFRESH
+// ==========================================
+
+setInterval(() => {
+  if (currentAdmin) {
+    displaySessions();
+  }
+}, 15000);
+
+// ==========================================
+// LOGOUT
+// ==========================================
+
+logoutBtn.addEventListener(
+  "click",
+  async () => {
+
+    logoutBtn.disabled = true;
+
+    try {
+      const { error } =
+        await supabase.auth.signOut();
+
+      if (error) {
+        throw error;
+      }
+
+      window.location.replace("index.html");
+
+    } catch (error) {
+      alert(error.message);
+      logoutBtn.disabled = false;
+    }
+  }
+);
+
+// ==========================================
+// INITIALIZE
+// ==========================================
+
+initialize();
+
